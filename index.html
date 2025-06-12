@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人简介</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind CSS 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFC9',
+            accent: '#722ED1',
+            dark: '#1D2129',
+            light: '#F2F3F5',
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+      .btn-primary {
+        @apply bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-95;
+      }
+      .btn-secondary {
+        @apply bg-white border border-gray-300 hover:bg-gray-50 text-dark font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md active:scale-95;
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-light text-dark min-h-screen flex flex-col">
+  <!-- 顶部导航栏 -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <h1 class="text-xl font-bold text-primary flex items-center">
+        <i class="fa fa-user-circle mr-2"></i>个人简介
+      </h1>
+      <div class="flex space-x-2">
+        <button id="editModeBtn" class="btn-secondary flex items-center">
+          <i class="fa fa-pencil mr-1"></i> 编辑
+        </button>
+        <button id="saveBtn" class="btn-primary flex items-center hidden">
+          <i class="fa fa-save mr-1"></i> 保存
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <!-- 个人信息卡片 -->
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden mb-8 card-hover">
+      <div class="flex flex-col md:flex-row">
+        <!-- 左侧图片区域 -->
+        <div class="md:w-1/3 bg-gradient-to-br from-primary/90 to-primary p-8 flex flex-col items-center justify-center">
+          <div class="relative w-48 h-48 mb-6 rounded-full overflow-hidden border-4 border-white shadow-lg group">
+            <img id="profileImage" src="https://picsum.photos/200/200" alt="个人照片" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div id="imageUploadOverlay" class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+              <label for="imageUpload" class="text-white text-sm font-medium cursor-pointer">
+                <i class="fa fa-camera mr-1"></i> 更换照片
+              </label>
+              <input id="imageUpload" type="file" accept="image/*" class="hidden">
+            </div>
+          </div>
+          <div id="imageError" class="text-red-400 text-xs hidden">请上传有效的图片文件</div>
+        </div>
+        
+        <!-- 右侧信息区域 -->
+        <div class="md:w-2/3 p-8">
+          <div class="mb-6">
+            <h2 id="name" class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-2 editable">张三</h2>
+            <p id="title" class="text-lg text-gray-600 editable">Web前端开发工程师</p>
+          </div>
+          
+          <div class="space-y-4 mb-6">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-envelope"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-gray-500">电子邮箱</h3>
+                <p id="email" class="text-gray-900 editable">example@example.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-phone"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-gray-500">联系电话</h3>
+                <p id="phone" class="text-gray-900 editable">13800138000</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-map-marker"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-sm font-medium text-gray-500">工作地点</h3>
+                <p id="location" class="text-gray-900 editable">北京市海淀区</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pt-4 border-t border-gray-100">
+            <h3 class="text-lg font-semibold mb-3">关于我</h3>
+            <p id="about" class="text-gray-700 leading-relaxed editable">
+              我是一名拥有5年前端开发经验的工程师，专注于构建高性能、用户友好的Web应用。
+              熟练掌握HTML、CSS、JavaScript以及React、Vue等主流前端框架，对用户体验和界面设计有深刻理解。
+              热衷于学习新技术，不断提升自己的专业技能。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 技能与经验卡片 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- 技能卡片 -->
+      <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+        <h3 class="text-xl font-bold mb-6 flex items-center">
+          <i class="fa fa-code text-primary mr-2"></i>专业技能
+        </h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-sm font-medium">HTML/CSS</span>
+              <span class="text-sm font-medium">95%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div id="skill-html" class="bg-primary h-2.5 rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-sm font-medium">JavaScript</span>
+              <span class="text-sm font-medium">90%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div id="skill-js" class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-sm font-medium">React</span>
+              <span class="text-sm font-medium">85%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div id="skill-react" class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-1">
+              <span class="text-sm font-medium">Vue</span>
+              <span class="text-sm font-medium">75%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div id="skill-vue" class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 经验卡片 -->
+      <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+        <h3 class="text-xl font-bold mb-6 flex items-center">
+          <i class="fa fa-briefcase text-primary mr-2"></i>工作经验
+        </h3>
+        <div class="space-y-6">
+          <div class="relative pl-8 border-l-2 border-gray-200 pb-6">
+            <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+              <i class="fa fa-circle text-white text-xs"></i>
+            </div>
+            <div class="mb-2">
+              <h4 id="exp1-title" class="text-lg font-semibold editable">高级前端开发工程师</h4>
+              <p id="exp1-company" class="text-gray-600 editable">ABC科技有限公司</p>
+            </div>
+            <p id="exp1-period" class="text-sm text-gray-500 mb-2 editable">2020年至今</p>
+            <p id="exp1-desc" class="text-gray-700 editable">
+              负责公司核心产品的前端架构设计和开发，优化前端性能，提升用户体验。
+              主导多个重要项目的前端开发工作，带领团队完成技术难题的攻克。
+            </p>
+          </div>
+          
+          <div class="relative pl-8 border-l-2 border-gray-200 pb-6">
+            <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+              <i class="fa fa-circle text-white text-xs"></i>
+            </div>
+            <div class="mb-2">
+              <h4 id="exp2-title" class="text-lg font-semibold editable">前端开发工程师</h4>
+              <p id="exp2-company" class="text-gray-600 editable">XYZ网络科技有限公司</p>
+            </div>
+            <p id="exp2-period" class="text-sm text-gray-500 mb-2 editable">2018年-2020年</p>
+            <p id="exp2-desc" class="text-gray-700 editable">
+              参与公司多个产品的前端开发工作，负责组件化设计和开发，优化前端代码结构。
+              与UI设计师和后端工程师紧密合作，确保产品的视觉效果和功能实现。
+            </p>
+          </div>
+          
+          <div class="relative pl-8">
+            <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+              <i class="fa fa-circle text-white text-xs"></i>
+            </div>
+            <div class="mb-2">
+              <h4 id="exp3-title" class="text-lg font-semibold editable">Web开发实习生</h4>
+              <p id="exp3-company" class="text-gray-600 editable">123信息技术有限公司</p>
+            </div>
+            <p id="exp3-period" class="text-sm text-gray-500 mb-2 editable">2017年-2018年</p>
+            <p id="exp3-desc" class="text-gray-700 editable">
+              参与公司网站的开发和维护工作，学习前端开发技术，积累项目经验。
+              协助团队完成页面开发和测试工作，解决遇到的技术问题。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white py-6 mt-12">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2023 个人简介 | 设计与开发</p>
+      <div class="flex justify-center space-x-4 mt-3">
+        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+          <i class="fa fa-github text-xl"></i>
+        </a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+          <i class="fa fa-linkedin text-xl"></i>
+        </a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+          <i class="fa fa-twitter text-xl"></i>
+        </a>
+        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+          <i class="fa fa-envelope text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 编辑模态框 -->
+  <div id="editModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-gray-100">
+        <h3 class="text-xl font-bold">编辑技能</h3>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <label for="skill-name" class="block text-sm font-medium text-gray-700 mb-1">技能名称</label>
+          <input type="text" id="skill-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+        </div>
+        <div>
+          <label for="skill-value" class="block text-sm font-medium text-gray-700 mb-1">技能水平 (%)</label>
+          <input type="range" id="skill-value" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
+          <div class="flex justify-between mt-1">
+            <span class="text-xs text-gray-500">0%</span>
+            <span class="text-xs text-gray-500">100%</span>
+          </div>
+          <div class="text-center mt-1">
+            <span id="skill-value-display" class="text-sm font-medium">50%</span>
+          </div>
+        </div>
+      </div>
+      <div class="p-6 border-t border-gray-100 flex justify-end space-x-3">
+        <button id="cancelSkillEdit" class="btn-secondary">取消</button>
+        <button id="saveSkillEdit" class="btn-primary">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通知提示 -->
+  <div id="notification" class="fixed bottom-6 right-6 bg-dark text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <p id="notification-message"></p>
+  </div>
+
+  <script>
+    // DOM 元素
+    const editModeBtn = document.getElementById('editModeBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const profileImage = document.getElementById('profileImage');
+    const imageUpload = document.getElementById('imageUpload');
+    const imageError = document.getElementById('imageError');
+    const editableElements = document.querySelectorAll('.editable');
+    const editModal = document.getElementById('editModal');
+    const cancelSkillEdit = document.getElementById('cancelSkillEdit');
+    const saveSkillEdit = document.getElementById('saveSkillEdit');
+    const skillNameInput = document.getElementById('skill-name');
+    const skillValueInput = document.getElementById('skill-value');
+    const skillValueDisplay = document.getElementById('skill-value-display');
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    
+    // 编辑模式状态
+    let isEditMode = false;
+    
+    // 技能编辑状态
+    let currentSkillElement = null;
+    
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      // 监听编辑模式切换
+      editModeBtn.addEventListener('click', toggleEditMode);
+      saveBtn.addEventListener('click', saveChanges);
+      
+      // 监听图片上传
+      imageUpload.addEventListener('change', handleImageUpload);
+      
+      // 监听技能条点击
+      document.querySelectorAll('[id^="skill-"]').forEach(skillBar => {
+        skillBar.addEventListener('click', () => {
+          if (isEditMode) {
+            openSkillEditModal(skillBar);
+          }
+        });
+      });
+      
+      // 监听技能编辑模态框
+      cancelSkillEdit.addEventListener('click', () => {
+        editModal.classList.add('hidden');
+      });
+      
+      saveSkillEdit.addEventListener('click', saveSkillChanges);
+      
+      // 监听滑块变化
+      skillValueInput.addEventListener('input', () => {
+        skillValueDisplay.textContent = `${skillValueInput.value}%`;
+      });
+    });
+    
+    // 切换编辑模式
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      
+      if (isEditMode) {
+        editModeBtn.classList.add('hidden');
+        saveBtn.classList.remove('hidden');
+        document.body.classList.add('cursor-pointer');
+        
+        // 为可编辑元素添加编辑样式
+        editableElements.forEach(el => {
+          el.contentEditable = true;
+          el.classList.add('hover:bg-gray-50', 'hover:rounded-md', 'px-1', 'py-0.5');
+          el.classList.add('transition-all', 'duration-200');
+        });
+        
+        // 显示图片上传覆盖层
+        document.getElementById('imageUploadOverlay').classList.remove('hidden');
+        document.getElementById('imageUploadOverlay').classList.add('opacity-100');
+        
+        // 显示技能条可编辑提示
+        document.querySelectorAll('[id^="skill-"]').forEach(skillBar => {
+          skillBar.classList.add('cursor-pointer', 'hover:opacity-80');
+        });
+        
+        showNotification('已进入编辑模式', 'info');
+      } else {
+        saveBtn.classList.add('hidden');
+        editModeBtn.classList.remove('hidden');
+        document.body.classList.remove('cursor-pointer');
+        
+        // 移除可编辑元素的编辑样式
+        editableElements.forEach(el => {
+          el.contentEditable = false;
+          el.classList.remove('hover:bg-gray-50', 'hover:rounded-md', 'px-1', 'py-0.5');
+        });
+        
+        // 隐藏图片上传覆盖层
+        document.getElementById('imageUploadOverlay').classList.add('hidden');
+        document.getElementById('imageUploadOverlay').classList.remove('opacity-100');
+        
+        // 移除技能条可编辑提示
+        document.querySelectorAll('[id^="skill-"]').forEach(skillBar => {
+          skillBar.classList.remove('cursor-pointer', 'hover:opacity-80');
+        });
+        
+        showNotification('已退出编辑模式', 'info');
+      }
+    }
+    
+    // 处理图片上传
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+          profileImage.src = event.target.result;
+          profileImage.classList.add('animate-fadeIn');
+          imageError.classList.add('hidden');
+          showNotification('图片上传成功', 'success');
+        };
+        
+        reader.onerror = function() {
+          imageError.classList.remove('hidden');
+          showNotification('图片上传失败', 'error');
+        };
+        
+        reader.readAsDataURL(file);
+      }
+    }
+    
+    // 保存更改
+    function saveChanges() {
+      // 这里可以添加实际的保存逻辑，比如发送数据到服务器
+      // 这里仅模拟保存成功
+      showNotification('保存成功', 'success');
+      toggleEditMode();
+    }
+    
+    // 打开技能编辑模态框
+    function openSkillEditModal(skillBar) {
+      currentSkillElement = skillBar;
+      
+      // 提取技能名称和值
+      const skillId = skillBar.id.replace('skill-', '');
+      const skillName = skillId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      const skillValue = parseInt(skillBar.style.width);
+      
+      // 填充表单
+      skillNameInput.value = skillName;
+      skillValueInput.value = skillValue;
+      skillValueDisplay.textContent = `${skillValue}%`;
+      
+      // 显示模态框
+      editModal.classList.remove('hidden');
+    }
+    
+    // 保存技能更改
+    function saveSkillChanges() {
+      if (currentSkillElement) {
+        const newSkillValue = parseInt(skillValueInput.value);
+        currentSkillElement.style.width = `${newSkillValue}%`;
+        
+        // 添加动画效果
+        currentSkillElement.classList.add('animate-pulse');
+        setTimeout(() => {
+          currentSkillElement.classList.remove('animate-pulse');
+        }, 1000);
+        
+        editModal.classList.add('hidden');
+        showNotification('技能更新成功', 'success');
+      }
+    }
+    
+    // 显示通知
+    function showNotification(message, type = 'info') {
+      notificationMessage.textContent = message;
+      
+      // 设置通知类型样式
+      notification.className = 'fixed bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50';
+      
+      if (type === 'success') {
+        notification.classList.add('bg-green-600', 'text-white');
+      } else if (type === 'error') {
+        notification.classList.add('bg-red-600', 'text-white');
+      } else {
+        notification.classList.add('bg-dark', 'text-white');
+      }
+      
+      // 显示通知
+      notification.classList.remove('translate-y-20', 'opacity-0');
+      
+      // 3秒后隐藏通知
+      setTimeout(() => {
+        notification.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+    
+    // 添加动画样式
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      .animate-pulse {
+        animation: pulse 1s ease-in-out infinite;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

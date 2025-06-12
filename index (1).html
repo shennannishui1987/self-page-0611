@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心灵港湾 - 专业心理工作室</title>
+  <script type="text/javascript" src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- Tailwind CSS 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFC9',
+            accent: '#722ED1',
+            dark: '#1D2129',
+            light: '#F2F3F5',
+            calm: '#4A90E2',
+            serene: '#81C784',
+            warm: '#FFB74D',
+            soft: '#E0E0E0',
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+      .btn-primary {
+        @apply bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-95;
+      }
+      .btn-secondary {
+        @apply bg-white border border-gray-300 hover:bg-gray-50 text-dark font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md active:scale-95;
+      }
+      .nav-link {
+        @apply text-gray-600 hover:text-primary font-medium px-3 py-2 rounded-md transition-colors duration-200;
+      }
+      .nav-link-active {
+        @apply text-primary bg-primary/10 font-medium px-3 py-2 rounded-md;
+      }
+      .section-padding {
+        @apply py-12 md:py-16;
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-float-delay-1 {
+        animation: float 6s ease-in-out 1s infinite;
+      }
+      .animate-float-delay-2 {
+        animation: float 6s ease-in-out 2s infinite;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+      }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-light text-dark min-h-screen flex flex-col">
+  <!-- 顶部导航栏 -->
+  <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300" id="main-header">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <div class="flex items-center">
+          <a href="#home" class="flex items-center">
+            <i class="fa fa-heart text-primary text-2xl mr-2"></i>
+            <span class="text-xl font-bold text-primary">心灵港湾</span>
+          </a>
+        </div>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex space-x-1">
+          <a href="#home" class="nav-link nav-link-active">工作室简介</a>
+          <a href="#assessment" class="nav-link">心理测评</a>
+          <a href="#activities" class="nav-link">活动列表</a>
+          <a href="#contact" class="nav-link">加入与联系</a>
+        </nav>
+        
+        <!-- 移动端菜单按钮 -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-button" class="text-gray-500 hover:text-primary focus:outline-none">
+            <i class="fa fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100">
+      <div class="container mx-auto px-4 py-3 space-y-1">
+        <a href="#home" class="block nav-link nav-link-active">工作室简介</a>
+        <a href="#assessment" class="block nav-link">心理测评</a>
+        <a href="#activities" class="block nav-link">活动列表</a>
+        <a href="#contact" class="block nav-link">加入与联系</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- 工作室简介部分 -->
+    <section id="home" class="section-padding bg-gradient-to-br from-calm/5 to-primary/5">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark mb-4">心灵港湾工作室</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg">我们致力于提供专业、温暖、个性化的心理健康服务，帮助每个人找到内心的平静与力量。</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="order-2 md:order-1">
+            <h3 class="text-2xl font-bold mb-4">关于我们</h3>
+            <p class="text-gray-700 mb-4">心灵港湾成立于2015年，是一家专注于心理健康咨询与辅导的专业机构。我们拥有一支由资深心理咨询师组成的团队，致力于为个人、家庭和企业提供高质量的心理健康服务。</p>
+            <p class="text-gray-700 mb-6">我们相信每个人都有自我成长和改变的潜力，通过专业的心理咨询和支持，帮助来访者认识自我、解决问题、提升心理素质，过上更加健康、幸福的生活。</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <i class="fa fa-users"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">专业团队</h4>
+                  <p class="text-gray-600 text-sm">所有咨询师均拥有专业资质和丰富经验</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <i class="fa fa-lock"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">严格保密</h4>
+                  <p class="text-gray-600 text-sm">保障来访者的隐私和个人信息安全</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <i class="fa fa-heartbeat"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">个性化服务</h4>
+                  <p class="text-gray-600 text-sm">根据个人需求定制专属咨询方案</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <i class="fa fa-globe"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">线上线下结合</h4>
+                  <p class="text-gray-600 text-sm">提供灵活的咨询方式，满足不同需求</p>
+                </div>
+              </div>
+            </div>
+            
+            <a href="#contact" class="btn-primary inline-flex items-center">
+              <i class="fa fa-arrow-right mr-2"></i> 了解更多
+            </a>
+          </div>
+          
+          <div class="order-1 md:order-2 relative">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl">
+              <img src="https://picsum.photos/id/1025/600/400" alt="心理工作室环境" class="w-full h-auto object-cover">
+            </div>
+            <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-secondary/20 rounded-full blur-2xl animate-float"></div>
+            <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary/20 rounded-full blur-2xl animate-float-delay-1"></div>
+          </div>
+        </div>
+        
+        <!-- 服务项目 -->
+        <div class="mt-20">
+          <h3 class="text-2xl font-bold mb-10 text-center">我们的服务</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-calm/10 flex items-center justify-center text-calm mb-4">
+                <i class="fa fa-user-md text-2xl"></i>
+              </div>
+              <h4 class="text-xl font-semibold mb-3">个体心理咨询</h4>
+              <p class="text-gray-600 mb-4">针对个人的情绪困扰、人际关系、职业发展等问题提供专业咨询服务。</p>
+              <a href="#assessment" class="text-primary font-medium hover:text-primary/80 flex items-center">
+                了解更多 <i class="fa fa-angle-right ml-1"></i>
+              </a>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-warm/10 flex items-center justify-center text-warm mb-4">
+                <i class="fa fa-users text-2xl"></i>
+              </div>
+              <h4 class="text-xl font-semibold mb-3">家庭与婚姻咨询</h4>
+              <p class="text-gray-600 mb-4">帮助家庭成员改善沟通模式，解决冲突，增强家庭凝聚力和亲密关系。</p>
+              <a href="#assessment" class="text-primary font-medium hover:text-primary/80 flex items-center">
+                了解更多 <i class="fa fa-angle-right ml-1"></i>
+              </a>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+              <div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-4">
+                <i class="fa fa-briefcase text-2xl"></i>
+              </div>
+              <h4 class="text-xl font-semibold mb-3">企业EAP服务</h4>
+              <p class="text-gray-600 mb-4">为企业员工提供心理健康评估、咨询和培训，提升员工心理素质和工作效率。</p>
+              <a href="#assessment" class="text-primary font-medium hover:text-primary/80 flex items-center">
+                了解更多 <i class="fa fa-angle-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 心理测评部分 -->
+    <section id="assessment" class="section-padding bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark mb-4">专业心理测评</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg">我们提供多种专业心理测评工具，帮助您了解自己的心理状态、性格特点和潜在问题。</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- 测评卡片 1 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/201/600/400" alt="情绪状态测评" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">情绪状态测评</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">评估您当前的情绪状态，识别潜在的情绪问题，提供针对性的调节建议。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约15分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 测评卡片 2 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/202/600/400" alt="压力水平测评" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">压力水平测评</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">了解您当前的压力水平和应对方式，学习有效的压力管理技巧。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约10分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 测评卡片 3 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/203/600/400" alt="人际关系测评" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">人际关系测评</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">评估您的人际关系模式和沟通风格，提升人际交往能力和关系质量。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约20分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 测评卡片 4 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/204/600/400" alt="职业性格测评" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">职业性格测评</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">了解您的职业性格特点和优势，为职业规划和发展提供参考。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约25分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 测评卡片 5 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/205/600/400" alt="心理健康筛查" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">心理健康筛查</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">全面筛查常见的心理健康问题，提供专业的评估和建议。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约30分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 测评卡片 6 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover group">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://picsum.photos/id/206/600/400" alt="亲子关系测评" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent flex items-end">
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white">亲子关系测评</h3>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-gray-600 mb-4">评估您与孩子的关系质量和互动模式，学习有效的亲子沟通技巧。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">约20分钟</span>
+                <button class="btn-primary">开始测评</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 测评流程 -->
+        <div class="mt-20 bg-calm/5 rounded-2xl p-8">
+          <h3 class="text-2xl font-bold mb-8 text-center">测评流程</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="text-center">
+              <div class="w-16 h-16 rounded-full bg-calm/20 flex items-center justify-center text-calm text-xl font-bold mx-auto mb-4">1</div>
+              <h4 class="font-semibold mb-2">选择测评</h4>
+              <p class="text-gray-600 text-sm">根据您的需求选择适合的测评项目</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-16 h-16 rounded-full bg-calm/20 flex items-center justify-center text-calm text-xl font-bold mx-auto mb-4">2</div>
+              <h4 class="font-semibold mb-2">完成测试</h4>
+              <p class="text-gray-600 text-sm">在线完成测评问卷，大约需要10-30分钟</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-16 h-16 rounded-full bg-calm/20 flex items-center justify-center text-calm text-xl font-bold mx-auto mb-4">3</div>
+              <h4 class="font-semibold mb-2">获取报告</h4>
+              <p class="text-gray-600 text-sm">系统自动生成详细的测评报告</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="w-16 h-16 rounded-full bg-calm/20 flex items-center justify-center text-calm text-xl font-bold mx-auto mb-4">4</div>
+              <h4 class="font-semibold mb-2">专业解读</h4>
+              <p class="text-gray-600 text-sm">可预约专业咨询师进行报告解读和咨询</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 活动列表部分 -->
+    <section id="activities" class="section-padding bg-gradient-to-br from-primary/5 to-secondary/5">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark mb-4">心理健康活动</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg">参加我们的心理健康活动，与专业人士和志同道合的朋友一起学习、交流和成长。</p>
+        </div>
+        
+        <!-- 活动分类筛选 -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10">
+          <button class="btn-primary">全部活动</button>
+          <button class="btn-secondary">讲座工作坊</button>
+          <button class="btn-secondary">团体辅导</button>
+          <button class="btn-secondary">户外拓展</button>
+          <button class="btn-secondary">读书会</button>
+        </div>
+        
+        <!-- 活动列表 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 活动卡片 1 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/325/600/300" alt="情绪管理工作坊" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                讲座工作坊
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年10月15日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 14:00-16:00
+              </div>
+              <h3 class="text-xl font-bold mb-2">情绪管理：如何应对压力和焦虑</h3>
+              <p class="text-gray-600 mb-4">学习有效的情绪管理技巧，提升心理弹性，更好地应对生活中的压力和挑战。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">主讲：张教授</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 活动卡片 2 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/326/600/300" alt="亲子沟通团体辅导" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
+                团体辅导
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年10月20日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 19:00-21:00
+              </div>
+              <h3 class="text-xl font-bold mb-2">亲子沟通工作坊：建立良好的家庭关系</h3>
+              <p class="text-gray-600 mb-4">学习如何与孩子建立有效的沟通模式，增进亲子关系，解决亲子冲突。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">主讲：李老师</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 活动卡片 3 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/327/600/300" alt="户外心灵拓展" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-warm text-white text-sm font-medium px-3 py-1 rounded-full">
+                户外拓展
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年10月22日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 全天
+              </div>
+              <h3 class="text-xl font-bold mb-2">心灵之旅：自然与心灵的对话</h3>
+              <p class="text-gray-600 mb-4">走进大自然，通过户外拓展活动，释放压力，找回内心的平静与力量。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">领队：王教练</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 活动卡片 4 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/328/600/300" alt="读书会" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-accent text-white text-sm font-medium px-3 py-1 rounded-full">
+                读书会
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年10月28日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 15:00-17:00
+              </div>
+              <h3 class="text-xl font-bold mb-2">心灵成长读书会：《当下的力量》分享</h3>
+              <p class="text-gray-600 mb-4">一起阅读和讨论《当下的力量》，学习活在当下，摆脱焦虑和烦恼。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">领读：赵老师</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 活动卡片 5 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/329/600/300" alt="职场心理讲座" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-primary text-white text-sm font-medium px-3 py-1 rounded-full">
+                讲座工作坊
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年11月5日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 19:00-21:00
+              </div>
+              <h3 class="text-xl font-bold mb-2">职场心理：如何应对工作压力和职业倦怠</h3>
+              <p class="text-gray-600 mb-4">了解职场压力和职业倦怠的成因与应对策略，提升工作效率和职业满意度。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">主讲：陈博士</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 活动卡片 6 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="relative">
+              <img src="https://picsum.photos/id/330/600/300" alt="冥想工作坊" class="w-full h-48 object-cover">
+              <div class="absolute top-3 left-3 bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full">
+                团体辅导
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center text-sm text-gray-500 mb-2">
+                <i class="fa fa-calendar-o mr-2"></i> 2023年11月12日
+                <span class="mx-2">•</span>
+                <i class="fa fa-clock-o mr-2"></i> 10:00-12:00
+              </div>
+              <h3 class="text-xl font-bold mb-2">冥想入门：开启内心的宁静之旅</h3>
+              <p class="text-gray-600 mb-4">学习冥想的基本技巧和方法，体验冥想带来的平静和放松，提升专注力和情绪管理能力。</p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-medium">指导：林老师</span>
+                <button class="btn-primary">立即报名</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 查看更多按钮 -->
+        <div class="text-center mt-12">
+          <button class="btn-primary px-8">查看更多活动</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 加入与联系部分 -->
+    <section id="contact" class="section-padding bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark mb-4">加入我们</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto text-lg">无论您是寻求专业帮助，还是希望成为我们团队的一员，我们都期待与您建立联系。</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- 联系表单 -->
+          <div class="bg-white rounded-xl shadow-md p-8">
+            <h3 class="text-2xl font-bold mb-6">联系我们</h3>
+            <form id="contact-form">
+              <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的姓名">
+              </div>
+              
+              <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">电子邮箱</label>
+                <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="请输入您的电子邮箱">
+              </div>
+              
+              <div class="mb-4">
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">手机号码</label>
+                <input type="tel" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:
